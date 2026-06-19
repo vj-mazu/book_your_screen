@@ -14,6 +14,8 @@ const occasions = [
   "Romantic Movie Date",
   "Friend's Reunion / Party",
   "Marriage Proposal Setup",
+  "Naming Ceremony",
+  "Small Family Pooja",
   "Other / Custom Celebration",
 ];
 
@@ -44,7 +46,7 @@ export const BookingForm: React.FC = () => {
       particleCount: 150,
       spread: 70,
       origin: { y: 0.6 },
-      colors: ["#4E85BF", "#89AACC", "#4b5563", "#000000"],
+      colors: ["#ffd700", "#b8860b", "#d4af37", "#f3e5ab"],
     });
 
     // Format WhatsApp message
@@ -66,85 +68,91 @@ Please confirm availability!`;
     const encodedText = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/919019333970?text=${encodedText}`;
 
-    // Open WhatsApp immediately to prevent browser popup blockers from stopping it
+    // Open WhatsApp immediately
     window.open(whatsappUrl, "_blank");
   };
 
   return (
-    <section id="booking" className="bg-bg py-24 md:py-32 border-t border-stroke/40">
-      <div className="max-w-[800px] mx-auto px-6">
+    <section id="booking" className="bg-[#fffdf9] py-24 md:py-32 border-t border-stroke/40 relative">
+      {/* Dynamic ambient gold background accent */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[700px] h-[350px] md:h-[700px] rounded-full bg-[#d4af37]/[0.03] blur-[120px] pointer-events-none" />
+
+      <div className="max-w-[720px] mx-auto px-6 relative z-10">
         
         {/* Title */}
         <div className="text-center mb-16 flex flex-col items-center">
-          <span className="text-xs text-muted uppercase tracking-[0.3em] font-semibold mb-4">
-            Reservation Planner
+          <span className="text-[10px] text-accent uppercase tracking-[4px] font-black mb-4 bg-[#d4af37]/10 px-4.5 py-2 rounded-full border border-[#d4af37]/20">
+            Booking Coordinator
           </span>
-          <h2 className="text-4xl md:text-5xl font-display text-text-primary mb-4 leading-tight">
-            Schedule your <span className="italic font-normal">celebration</span>
+          <h2 className="text-4xl md:text-6xl font-display text-text-primary italic mb-4 font-bold">
+            Schedule your <span className="bg-gradient-to-r from-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent not-italic font-black">Celebration</span>
           </h2>
-          <p className="text-sm md:text-base text-muted max-w-md leading-relaxed">
-            Customize your private booking details below and connect with our team directly via WhatsApp to block your slot.
+          <p className="text-xs md:text-sm text-muted max-w-md leading-relaxed font-semibold">
+            Choose your occasion, date, and preferred timings from the drop-downs. Tap submit to send your reservation request directly to our team via WhatsApp.
           </p>
         </div>
 
-        {/* Interactive Booking Form */}
+        {/* Redesigned Premium Booking Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-surface border border-stroke/60 rounded-[2.5rem] p-6 md:p-12 shadow-sm"
+          className="bg-white border border-[#d4af37]/25 rounded-[2.5rem] p-6 md:p-12 shadow-[0_20px_50px_rgba(212,175,55,0.06)]"
         >
-          {/* Grid Selection */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-6">
             
-            {/* 1. Screen Selection */}
+            {/* 1. Screen Type Selector */}
             <div>
-              <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-3">
+              <label className="block text-[10px] font-black text-muted uppercase tracking-wider mb-2">
                 1. Select Private Screen
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {screens.map((scr) => (
-                  <button
-                    type="button"
-                    key={scr}
-                    onClick={() => setSelectedScreen(scr)}
-                    className={`text-left px-5 py-3.5 rounded-2xl text-xs font-semibold border transition-all duration-300 ${
-                      selectedScreen === scr
-                        ? "border-accent bg-accent/5 text-text-primary shadow-sm"
-                        : "border-stroke/60 bg-bg text-muted hover:border-stroke hover:text-text-primary"
-                    }`}
-                  >
-                    {scr}
-                  </button>
-                ))}
+              <div className="relative">
+                <select
+                  value={selectedScreen}
+                  onChange={(e) => setSelectedScreen(e.target.value)}
+                  className="w-full px-5 py-4 rounded-2xl border border-stroke/60 bg-[#fffdf9] text-xs font-bold text-text-primary focus:outline-none focus:border-accent appearance-none cursor-pointer"
+                >
+                  {screens.map((scr) => (
+                    <option key={scr} value={scr}>
+                      {scr}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-accent">
+                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                  </svg>
+                </div>
               </div>
             </div>
 
-            {/* 2. Occasion Selection */}
+            {/* 2. Occasion Dropdown Selector */}
             <div>
-              <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-3">
-                2. Choose Occasion
+              <label className="block text-[10px] font-black text-muted uppercase tracking-wider mb-2">
+                2. Choose Celebration Event
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {occasions.map((occ) => (
-                  <button
-                    type="button"
-                    key={occ}
-                    onClick={() => setSelectedOccasion(occ)}
-                    className={`text-center px-4 py-3 rounded-xl text-xs font-semibold border transition-all duration-300 ${
-                      selectedOccasion === occ
-                        ? "border-accent bg-accent/5 text-text-primary shadow-sm"
-                        : "border-stroke/60 bg-bg text-muted hover:border-stroke hover:text-text-primary"
-                    }`}
-                  >
-                    {occ}
-                  </button>
-                ))}
+              <div className="relative">
+                <select
+                  value={selectedOccasion}
+                  onChange={(e) => setSelectedOccasion(e.target.value)}
+                  className="w-full px-5 py-4 rounded-2xl border border-stroke/60 bg-[#fffdf9] text-xs font-bold text-text-primary focus:outline-none focus:border-accent appearance-none cursor-pointer"
+                >
+                  {occasions.map((occ) => (
+                    <option key={occ} value={occ}>
+                      {occ}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-accent">
+                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                  </svg>
+                </div>
               </div>
             </div>
 
-            {/* 3. Date & Time Selection */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* 3. Date & Time Slots (Dual Columns) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-3">
+                <label className="block text-[10px] font-black text-muted uppercase tracking-wider mb-2">
                   3. Select Date
                 </label>
                 <input
@@ -152,36 +160,43 @@ Please confirm availability!`;
                   required
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full px-5 py-3 rounded-2xl border border-stroke/60 bg-bg text-xs font-semibold text-text-primary focus:outline-none focus:border-accent [color-scheme:light]"
+                  className="w-full px-5 py-3.5 rounded-2xl border border-stroke/60 bg-[#fffdf9] text-xs font-bold text-text-primary focus:outline-none focus:border-accent [color-scheme:light] cursor-pointer"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-3">
+                <label className="block text-[10px] font-black text-muted uppercase tracking-wider mb-2">
                   4. Choose Time Slot
                 </label>
-                <select
-                  value={timeSlot}
-                  onChange={(e) => setTimeSlot(e.target.value)}
-                  className="w-full px-5 py-3 rounded-2xl border border-stroke/60 bg-bg text-xs font-semibold text-text-primary focus:outline-none focus:border-accent"
-                >
-                  {timeSlots.map((ts) => (
-                    <option key={ts} value={ts}>
-                      {ts}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <select
+                    value={timeSlot}
+                    onChange={(e) => setTimeSlot(e.target.value)}
+                    className="w-full px-5 py-4 rounded-2xl border border-stroke/60 bg-[#fffdf9] text-xs font-bold text-text-primary focus:outline-none focus:border-accent appearance-none cursor-pointer"
+                  >
+                    {timeSlots.map((ts) => (
+                      <option key={ts} value={ts}>
+                        {ts}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-accent">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* 4. Custom Packages Add-ons */}
+            {/* 4. Add-on Checkbox Packages */}
             <div>
-              <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-3">
+              <label className="block text-[10px] font-black text-muted uppercase tracking-wider mb-3">
                 5. Customize Surprise Add-ons (Optional)
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 
-                <label className="flex items-center gap-3 p-4 bg-bg border border-stroke/60 rounded-2xl cursor-pointer hover:border-stroke transition-all">
+                <label className="flex items-center gap-3 p-4 bg-[#fffdf9] border border-stroke/60 rounded-2xl cursor-pointer hover:border-[#d4af37]/55 transition-all">
                   <input
                     type="checkbox"
                     checked={decor}
@@ -190,11 +205,11 @@ Please confirm availability!`;
                   />
                   <div>
                     <h5 className="text-xs font-bold text-text-primary">Party Decorations</h5>
-                    <p className="text-[10px] text-muted">Balloons, light tags, flower setup</p>
+                    <p className="text-[9px] text-muted font-medium">Balloons, lighting overlays, sashes</p>
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-4 bg-bg border border-stroke/60 rounded-2xl cursor-pointer hover:border-stroke transition-all">
+                <label className="flex items-center gap-3 p-4 bg-[#fffdf9] border border-stroke/60 rounded-2xl cursor-pointer hover:border-[#d4af37]/55 transition-all">
                   <input
                     type="checkbox"
                     checked={cake}
@@ -203,11 +218,11 @@ Please confirm availability!`;
                   />
                   <div>
                     <h5 className="text-xs font-bold text-text-primary">Birthday Cake</h5>
-                    <p className="text-[10px] text-muted">Fresh, custom half-kg pastry cake</p>
+                    <p className="text-[9px] text-muted font-medium">Fresh, customized half-kg pastry cake</p>
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-4 bg-bg border border-stroke/60 rounded-2xl cursor-pointer hover:border-stroke transition-all">
+                <label className="flex items-center gap-3 p-4 bg-[#fffdf9] border border-stroke/60 rounded-2xl cursor-pointer hover:border-[#d4af37]/55 transition-all">
                   <input
                     type="checkbox"
                     checked={food}
@@ -216,11 +231,11 @@ Please confirm availability!`;
                   />
                   <div>
                     <h5 className="text-xs font-bold text-text-primary">Snacks & Drinks</h5>
-                    <p className="text-[10px] text-muted">Special mocktails and gourmet bites</p>
+                    <p className="text-[9px] text-muted font-medium">Signature mocktails & hot starters</p>
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-4 bg-bg border border-stroke/60 rounded-2xl cursor-pointer hover:border-stroke transition-all">
+                <label className="flex items-center gap-3 p-4 bg-[#fffdf9] border border-stroke/60 rounded-2xl cursor-pointer hover:border-[#d4af37]/55 transition-all">
                   <input
                     type="checkbox"
                     checked={photography}
@@ -228,18 +243,18 @@ Please confirm availability!`;
                     className="w-4 h-4 rounded text-accent focus:ring-accent"
                   />
                   <div>
-                    <h5 className="text-xs font-bold text-text-primary">Photography</h5>
-                    <p className="text-[10px] text-muted">Professional photoshoot during celebration</p>
+                    <h5 className="text-xs font-bold text-text-primary">Professional Photography</h5>
+                    <p className="text-[9px] text-muted font-medium">Premium digital photoshoot package</p>
                   </div>
                 </label>
 
               </div>
             </div>
 
-            {/* Submit Button */}
+            {/* Redesigned Submit button with Premium gold styling */}
             <button
               type="submit"
-              className="w-full mt-4 text-center py-4 rounded-full text-white font-semibold text-xs md:text-sm uppercase tracking-wider accent-gradient shadow-md transition-all duration-300 hover:shadow-lg hover:scale-[1.01]"
+              className="w-full mt-4 text-center py-4.5 rounded-full text-white font-bold text-xs uppercase tracking-[2px] bg-gradient-to-r from-[#d4af37] via-[#aa7c11] to-[#d4af37] shadow-lg shadow-[#d4af37]/20 transition-all duration-300 hover:scale-[1.01] cursor-pointer"
             >
               Send Booking Request on WhatsApp ↗
             </button>

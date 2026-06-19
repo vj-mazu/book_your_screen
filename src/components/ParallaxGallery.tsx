@@ -63,7 +63,7 @@ export const ParallaxGallery: React.FC = () => {
             </div>
             <h2 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-display text-text-primary leading-[0.85] uppercase italic font-bold">
               Cinematic <br />
-              <span className="text-accent">Moments</span>
+              <span className="bg-gradient-to-r from-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent not-italic font-black">Moments</span>
             </h2>
             <p className="text-muted font-sans text-xs uppercase tracking-[3px] mt-6 max-w-xs hidden md:block font-bold">
               Scroll down to swipe through real moments captured at Book Your Screen

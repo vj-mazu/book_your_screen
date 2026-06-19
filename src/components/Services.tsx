@@ -103,7 +103,7 @@ export const Services: React.FC = () => {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-display text-text-primary italic font-bold"
             >
-              Services
+              Our <span className="bg-gradient-to-r from-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent not-italic font-black">Services</span>
             </motion.h2>
           </div>
           
@@ -217,7 +217,7 @@ export const Services: React.FC = () => {
               </span>
             </div>
             <h3 className="text-4xl md:text-6xl font-display text-text-primary italic font-bold">
-              In-Theatre Amenities
+              In-Theatre <span className="bg-gradient-to-r from-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent not-italic font-black">Amenities</span>
             </h3>
           </motion.div>
 

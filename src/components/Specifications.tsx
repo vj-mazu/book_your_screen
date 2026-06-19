@@ -69,17 +69,31 @@ export const Specifications: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-24">
         
         {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="flex items-center gap-4 mb-12 md:mb-16"
-        >
-          <div className="w-12 h-[1px] bg-accent" />
-          <span className="text-accent font-sans text-[10px] uppercase tracking-[5px] font-bold">
-            Theatre Specifications
-          </span>
-        </motion.div>
+        <div className="mb-16">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-4 mb-6"
+          >
+            <div className="w-12 h-[1px] bg-accent" />
+            <span className="text-accent font-sans text-[10px] uppercase tracking-[5px] font-bold">
+              Theatre Specifications
+            </span>
+          </motion.div>
+
+          <div className="overflow-hidden">
+            <motion.h2
+              initial={{ y: "100%" }}
+              whileInView={{ y: "0%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="text-4xl md:text-6xl font-display text-text-primary italic font-bold"
+            >
+              Premium <span className="bg-gradient-to-r from-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent not-italic font-black">Specs</span>
+            </motion.h2>
+          </div>
+        </div>
 
         {/* Specs Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-transparent max-w-6xl mx-auto px-2">
