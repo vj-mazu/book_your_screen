@@ -119,64 +119,70 @@ export const Services: React.FC = () => {
         </div>
 
         {/* Services List */}
-        <div className="flex flex-col gap-24 md:gap-40">
+        <div className="flex flex-col gap-24 md:gap-36">
           {servicesList.map((service, idx) => {
             const isRight = idx % 2 !== 0;
             return (
               <div
                 key={idx}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center"
+                className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center"
               >
-                {/* Service Image / Cover */}
+                {/* Service Image / Cover Container with dynamic spring animation on hover */}
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: 50 }}
+                  initial={{ opacity: 0, scale: 0.96, y: 30 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.8, type: "spring", bounce: 0.15 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6 }}
+                  whileHover={{ 
+                    scale: 1.025,
+                    boxShadow: "0 25px 50px -12px rgba(212, 175, 55, 0.15)"
+                  }}
                   onClick={() => {
                     setActiveGallery(service);
                     setCurrentImgIndex(0);
                   }}
-                  className="aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl md:rounded-3xl relative cursor-pointer group shadow-lg"
+                  className={`aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl md:rounded-3xl relative cursor-pointer group border border-transparent hover:border-[#d4af37]/45 transition-colors duration-500 shadow-md ${
+                    isRight ? "lg:order-2" : ""
+                  }`}
                 >
                   <img
                     src={service.coverImage}
                     alt={service.title}
-                    className="w-full h-full object-cover object-center transition-transform duration-[1.5s] group-hover:scale-105"
+                    className="w-full h-full object-cover object-center transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-80 group-hover:opacity-65 transition-opacity duration-500" />
                   
                   {/* Huge Number behind */}
-                  <span className="absolute -top-4 -left-2 text-[120px] sm:text-[180px] md:text-[220px] font-display italic text-white/5 font-bold leading-none select-none pointer-events-none">
+                  <span className="absolute -top-4 -left-2 text-[100px] sm:text-[160px] md:text-[200px] font-display italic text-white/5 font-bold leading-none select-none pointer-events-none">
                     {service.num}
                   </span>
 
                   <div className="absolute bottom-6 left-6 right-6 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-xs font-semibold text-black shadow-md flex items-center gap-2">
-                      View Gallery
+                    <span className="bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full text-xs font-semibold text-black shadow-md flex items-center gap-2 border border-[#d4af37]/20">
+                      View Gallery 📸
                     </span>
                   </div>
                 </motion.div>
 
                 {/* Service Text Details */}
-                <div className="flex flex-col justify-center">
+                <div className={`flex flex-col justify-center ${isRight ? "lg:order-1" : ""}`}>
                   <span className="text-accent font-sans text-xs uppercase tracking-[5px] mb-4 block font-black bg-accent/10 px-4 py-2 rounded-md inline-block w-fit">
                     {service.subtitle}
                   </span>
                   
-                  <h3 className="text-4xl sm:text-5xl md:text-6xl font-display text-text-primary italic mb-6 leading-tight font-black">
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-display text-text-primary italic mb-5 leading-tight font-black">
                     {service.title}
                   </h3>
                   
-                  <p className="text-muted leading-relaxed mb-8 max-w-lg font-medium text-sm md:text-base">
+                  <p className="text-muted leading-relaxed mb-6 max-w-lg font-medium text-xs sm:text-sm md:text-base">
                     {service.longDescription}
                   </p>
 
-                  <div className={`flex flex-wrap gap-3 mb-10 ${isRight ? "lg:justify-end" : ""}`}>
+                  <div className="flex flex-wrap gap-2.5 mb-8">
                     {service.highlights.map((highlight, index) => (
                       <span
                         key={index}
-                        className="px-5 py-2.5 rounded-xl bg-surface border border-stroke text-text-primary font-sans text-[10px] uppercase tracking-[2px] shadow-sm font-bold"
+                        className="px-4.5 py-2 rounded-xl bg-surface border border-stroke text-text-primary font-sans text-[9px] uppercase tracking-[1.5px] shadow-sm font-bold hover:border-[#d4af37]/30 transition-colors"
                       >
                         {highlight}
                       </span>
@@ -188,7 +194,7 @@ export const Services: React.FC = () => {
                       setActiveGallery(service);
                       setCurrentImgIndex(0);
                     }}
-                    className="px-8 py-4 bg-accent text-white font-sans text-xs uppercase tracking-[3px] font-black rounded-full hover:bg-accent/80 hover:scale-105 transition-all shadow-lg flex items-center gap-3 w-fit"
+                    className="px-7 py-3.5 bg-accent hover:bg-accent/90 text-white font-sans text-xs uppercase tracking-[2.5px] font-black rounded-full hover:scale-105 transition-all shadow-md flex items-center gap-2.5 w-fit cursor-pointer"
                   >
                     Open Gallery
                   </button>

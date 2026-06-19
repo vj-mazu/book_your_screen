@@ -45,26 +45,26 @@ export const Hero: React.FC = () => {
   // GSAP Entrance Animations
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
       tl.fromTo(
         ".name-reveal",
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 1.2, delay: 0.5 }
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.5, delay: 0.1 }
       );
 
       tl.fromTo(
         ".blur-in",
-        { opacity: 0, filter: "blur(8px)", y: 15 },
-        { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.9, stagger: 0.12 },
-        "-=0.8"
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.4 },
+        "-=0.3"
       );
 
       tl.fromTo(
         ".ctas-reveal",
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.7 },
-        "-=0.5"
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.3 },
+        "-=0.2"
       );
     }, containerRef);
 
