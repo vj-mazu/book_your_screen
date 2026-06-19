@@ -50,13 +50,13 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             {/* Glowing Golden Logo Text */}
             <div className="relative z-10 flex flex-col items-center justify-center w-full px-6 max-w-4xl text-center">
               <div className="flex flex-col items-center gap-6">
-                <div className="flex flex-wrap justify-center gap-x-2.5 text-4xl sm:text-6xl font-display font-black tracking-wider text-accent italic">
+                <div className="flex flex-wrap justify-center gap-x-1 sm:gap-x-2 text-2xl sm:text-5xl md:text-6xl font-display font-black tracking-wider text-accent italic max-w-sm sm:max-w-none">
                   {titleLetters.map((letter, i) => (
                     <motion.span
                       key={i}
                       initial={{ opacity: 0, y: 15, filter: "blur(6px)" }}
                       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                      transition={{ delay: i * 0.05, duration: 0.5, ease: "easeOut" }}
+                      transition={{ delay: i * 0.04, duration: 0.5, ease: "easeOut" }}
                       className="inline-block drop-shadow-[0_2px_15px_rgba(212,175,55,0.4)] bg-gradient-to-b from-[#f3e5ab] via-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent"
                     >
                       {letter === " " ? "\u00A0" : letter}
@@ -68,7 +68,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.7 }}
                   transition={{ delay: 1.1, duration: 0.8 }}
-                  className="text-[9px] sm:text-xs text-white tracking-[0.45em] uppercase font-bold mt-2 text-gold-gradient"
+                  className="text-[8px] sm:text-xs text-white tracking-[0.25em] sm:tracking-[0.45em] uppercase font-bold mt-2 text-gold-gradient"
                 >
                   Private Theatre & Celebration Suites
                 </motion.p>

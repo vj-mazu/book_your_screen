@@ -125,9 +125,7 @@ export const Services: React.FC = () => {
             return (
               <div
                 key={idx}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center ${
-                  isRight ? "lg:direction-rtl" : ""
-                }`}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center"
               >
                 {/* Service Image / Cover */}
                 <motion.div
@@ -139,9 +137,7 @@ export const Services: React.FC = () => {
                     setActiveGallery(service);
                     setCurrentImgIndex(0);
                   }}
-                  className={`aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl md:rounded-3xl relative cursor-pointer group shadow-lg ${
-                    isRight ? "lg:order-2" : ""
-                  }`}
+                  className="aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl md:rounded-3xl relative cursor-pointer group shadow-lg"
                 >
                   <img
                     src={service.coverImage}
@@ -163,7 +159,7 @@ export const Services: React.FC = () => {
                 </motion.div>
 
                 {/* Service Text Details */}
-                <div className={`flex flex-col justify-center ${isRight ? "lg:order-1 lg:text-right lg:items-end" : ""}`}>
+                <div className="flex flex-col justify-center">
                   <span className="text-accent font-sans text-xs uppercase tracking-[5px] mb-4 block font-black bg-accent/10 px-4 py-2 rounded-md inline-block w-fit">
                     {service.subtitle}
                   </span>
