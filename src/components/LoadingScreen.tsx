@@ -82,8 +82,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             <motion.div
               initial={{ x: 0 }}
               animate={{ x: "-100%" }}
-              transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
-              className="absolute top-0 bottom-0 left-0 w-1/2 overflow-hidden z-20 border-r border-[#d4af37]/30 bg-black"
+              transition={{ duration: 1.4, ease: [0.85, 0, 0.15, 1] }}
+              className="absolute top-0 bottom-0 left-0 w-1/2 overflow-hidden z-20 border-r border-[#d4af37]/35 bg-[#0a0a0a]"
             >
               {/* Left half of the image */}
               <div className="absolute top-0 left-0 w-[200%] h-full">
@@ -97,20 +97,20 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
               
               {/* Left side text snippet to split beautifully */}
               <div className="absolute inset-0 flex items-center justify-end pr-1.5 sm:pr-2.5">
-                <span className="text-4xl sm:text-6xl font-display font-black tracking-wider text-accent italic opacity-25 select-none bg-gradient-to-b from-[#f3e5ab] via-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent transform translate-x-1/2">
+                <span className="text-2xl sm:text-6xl font-display font-black tracking-wider text-accent italic opacity-20 select-none bg-gradient-to-b from-[#f3e5ab] via-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent transform translate-x-1/2">
                   BOOK YOUR
                 </span>
               </div>
 
-              <div className="absolute top-0 right-0 w-[1px] h-full bg-gradient-to-b from-transparent via-[#d4af37]/50 to-transparent" />
+              <div className="absolute top-0 right-0 w-[1px] h-full bg-gradient-to-b from-transparent via-[#d4af37]/60 to-transparent" />
             </motion.div>
             
             {/* Right Split Panel */}
             <motion.div
               initial={{ x: 0 }}
               animate={{ x: "100%" }}
-              transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
-              className="absolute top-0 bottom-0 right-0 w-1/2 overflow-hidden z-20 border-l border-[#d4af37]/30 bg-black"
+              transition={{ duration: 1.4, ease: [0.85, 0, 0.15, 1] }}
+              className="absolute top-0 bottom-0 right-0 w-1/2 overflow-hidden z-20 border-l border-[#d4af37]/35 bg-[#0a0a0a]"
             >
               {/* Right half of the image */}
               <div className="absolute top-0 right-0 w-[200%] h-full">
@@ -124,12 +124,12 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
               {/* Right side text snippet to split beautifully */}
               <div className="absolute inset-0 flex items-center justify-start pl-1.5 sm:pl-2.5">
-                <span className="text-4xl sm:text-6xl font-display font-black tracking-wider text-accent italic opacity-25 select-none bg-gradient-to-b from-[#f3e5ab] via-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent transform -translate-x-1/2">
+                <span className="text-2xl sm:text-6xl font-display font-black tracking-wider text-accent italic opacity-20 select-none bg-gradient-to-b from-[#f3e5ab] via-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent transform -translate-x-1/2">
                   SCREEN
                 </span>
               </div>
 
-              <div className="absolute top-0 left-0 w-[1px] h-full bg-gradient-to-b from-transparent via-[#d4af37]/50 to-transparent" />
+              <div className="absolute top-0 left-0 w-[1px] h-full bg-gradient-to-b from-transparent via-[#d4af37]/60 to-transparent" />
             </motion.div>
           </>
         )}
