@@ -60,39 +60,80 @@ const specs: SpecItem[] = [
   },
 ];
 
+import { useLocation, type LocationType } from "./LocationContext";
+
 export const Specifications: React.FC = () => {
+  const { activeLocation, setActiveLocation, getLocationAssets } = useLocation();
+  const { details } = getLocationAssets();
+  const locationsList: LocationType[] = ["Hebbal", "Dr. Rajkumar Road", "Kuvempunagar"];
+
   return (
-    <section className="py-20 md:py-28 bg-bg relative overflow-hidden border-t border-stroke/40">
+    <section id="specifications" className="py-20 md:py-28 bg-bg relative overflow-hidden border-t border-stroke/40">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-stroke to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-stroke to-transparent" />
       
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-24">
         
-        {/* Section Title */}
-        <div className="mb-16">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-4 mb-6"
-          >
-            <div className="w-12 h-[1px] bg-accent" />
-            <span className="text-accent font-sans text-[10px] uppercase tracking-[5px] font-bold">
-              Theatre Specifications
-            </span>
-          </motion.div>
-
-          <div className="overflow-hidden">
-            <motion.h2
-              initial={{ y: "100%" }}
-              whileInView={{ y: "0%" }}
+        {/* Section Title & Location Switcher */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl md:text-6xl font-display text-text-primary italic font-bold"
+              className="flex items-center gap-4 mb-4"
             >
-              Premium <span className="bg-gradient-to-r from-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent not-italic font-black">Specs</span>
-            </motion.h2>
+              <div className="w-12 h-[1px] bg-accent" />
+              <span className="text-accent font-sans text-[10px] uppercase tracking-[5px] font-bold">
+                Theatre Specifications
+              </span>
+            </motion.div>
+
+            <div className="overflow-hidden">
+              <motion.h2
+                initial={{ y: "100%" }}
+                whileInView={{ y: "0%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="text-4xl md:text-6xl font-display text-text-primary italic font-bold"
+              >
+                Premium <span className="bg-gradient-to-r from-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent not-italic font-black">Specs</span>
+              </motion.h2>
+            </div>
           </div>
+
+          {/* Location Switcher Tabs */}
+          <div className="flex flex-col gap-2">
+            <span className="text-[9px] font-black uppercase text-muted tracking-[3px] block">
+              Switch Branch View:
+            </span>
+            <div className="inline-flex flex-wrap gap-1.5 p-1 bg-white border border-stroke/60 rounded-2xl shadow-sm">
+              {locationsList.map((loc) => {
+                const isSelected = activeLocation === loc;
+                return (
+                  <button
+                    key={loc}
+                    onClick={() => setActiveLocation(loc)}
+                    className={`text-[9px] md:text-[10px] font-black uppercase tracking-wider rounded-xl px-4 py-2 transition-all cursor-pointer ${
+                      isSelected 
+                        ? "bg-gradient-to-r from-[#d4af37] to-[#aa7c11] text-white shadow-sm"
+                        : "text-muted hover:text-text-primary hover:bg-stroke/40"
+                    }`}
+                  >
+                    {loc}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Selected Branch Info Bar */}
+        <div className="mb-10 p-4.5 rounded-2xl bg-white border border-[#d4af37]/20 shadow-[0_4px_20px_rgba(212,175,55,0.03)] flex items-center gap-3">
+          <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-[#d4af37] to-[#aa7c11] animate-pulse" />
+          <span className="text-xs text-text-primary font-bold tracking-wide">
+            {details}
+          </span>
         </div>
 
         {/* Specs Grid */}

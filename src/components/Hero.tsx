@@ -1,12 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { useLocation } from "./LocationContext";
 
 const occasions = ["Birthday Surprises", "Anniversary Specials", "Romantic Movie Dates", "Private Proposals"];
-const bgImages = [
-  "/assets/mysore_palace_day.png",
-  "/assets/mysore_palace_dusk.png",
-  "/assets/mysore_palace.png"
-];
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -17,14 +13,16 @@ export const Hero: React.FC = () => {
 
   const [occIndex, setOccIndex] = useState(0);
   const [bgIndex, setBgIndex] = useState(0);
+  const { activeLocation, getLocationAssets } = useLocation();
+  const { palaceImages, details } = getLocationAssets();
 
   // Preload carousel images for instant delivery
   useEffect(() => {
-    bgImages.forEach((src) => {
+    palaceImages.forEach((src) => {
       const img = new Image();
       img.src = src;
     });
-  }, []);
+  }, [palaceImages]);
 
   // Occasions and backgrounds cycling
   useEffect(() => {
@@ -33,14 +31,19 @@ export const Hero: React.FC = () => {
     }, 2800);
 
     const bgInterval = setInterval(() => {
-      setBgIndex((prev) => (prev + 1) % bgImages.length);
+      setBgIndex((prev) => (prev + 1) % palaceImages.length);
     }, 4500);
 
     return () => {
       clearInterval(occInterval);
       clearInterval(bgInterval);
     };
-  }, []);
+  }, [palaceImages]);
+
+  // Reset bg index when active location changes
+  useEffect(() => {
+    setBgIndex(0);
+  }, [activeLocation]);
 
   // GSAP Entrance Animations
   useEffect(() => {
@@ -82,59 +85,70 @@ export const Hero: React.FC = () => {
       ref={containerRef}
       className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-24 md:py-28 px-4 sm:px-6 md:px-12 bg-black"
     >
+
       {/* Full Screen Mysore Palace Carousel Background (Bright & Cleanly Visible) */}
       <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
-        {bgImages.map((src, idx) => (
+        {palaceImages.map((src, idx) => (
           <div
             key={src}
-            className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${
-              idx === bgIndex ? "opacity-100 scale-100" : "opacity-0 scale-105"
-            }`}
+            className={`hero-slide ${idx === bgIndex ? "active" : ""}`}
           >
             <img
               src={src}
               alt={`Mysore Palace View ${idx + 1}`}
-              className="w-full h-full object-cover saturate-[1.15] brightness-[0.88] contrast-[1.0] transition-transform duration-[4500ms] ease-out"
+              className="w-full h-full object-cover saturate-[1.15] brightness-[0.88] contrast-[1.0]"
             />
           </div>
         ))}
         {/* Transparent overlay positioned to secure text legibility on the left, but leaves the right side extremely bright & clear */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent md:block hidden" />
-        <div className="absolute inset-0 bg-black/55 md:hidden block" /> {/* slightly darker overlay for small mobile screens for readability */}
-        <div className="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/98 via-black/85 via-black/45 to-transparent md:block hidden" />
+        <div className="absolute inset-0 bg-black/75 md:hidden block" /> {/* slightly darker overlay for small mobile screens for readability */}
+        <div className="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t from-black/95 via-black/55 to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-7xl w-full mx-auto flex flex-col items-start px-6 md:px-12 mt-10 md:mt-0">
         
-        {/* Left Side: Premium Typography & CTAs (Directly on Background) */}
+        {/* Left Side: Dynamic typography directly on background with maximum contrast overlays */}
         <div className="w-full lg:max-w-2xl text-left flex flex-col items-start relative">
           
+          {/* Big prominent logo subtitle matching Navbar style */}
+          <div className="blur-in flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#d4af37] to-[#aa7c11] flex items-center justify-center p-[1.5px] shadow-md">
+              <div className="w-full h-full bg-white rounded-full flex items-center justify-center">
+                <span className="font-display italic text-[11px] font-black text-black select-none">BY</span>
+              </div>
+            </div>
+            <span className="text-xs sm:text-sm font-black uppercase text-white tracking-[6px] font-sans drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              BOOK YOUR SCREEN
+            </span>
+          </div>
+
           {/* Eyebrow - Standout text styling to highlight Mysuru's Premier Private Theatre */}
           <span
             ref={eyebrowRef}
-            className="blur-in text-[10px] md:text-[13px] font-black tracking-[0.3em] uppercase mb-6 inline-block bg-gradient-to-r from-[#ffd700] via-[#ffd700] to-[#b8860b] text-black shadow-lg shadow-[#d4af37]/35 border border-[#ffd700]/50 px-5 py-2.5 rounded-full font-sans"
+            className="blur-in text-[9px] md:text-[11px] font-black tracking-[0.25em] uppercase mb-5 inline-block bg-gradient-to-r from-[#d4af37] to-[#aa7c11] text-white shadow-md px-4 py-2 rounded-full font-sans"
           >
-            Mysuru's Premier Private Theatre
+            {activeLocation === "Hebbal" ? "Hebbal Abhishek Circle" : activeLocation === "Dr. Rajkumar Road" ? "Dr. Rajkumar Road" : "Kuvempunagar Branch"}
           </span>
 
           {/* Title */}
           <h1
             ref={titleRef}
-            className="name-reveal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display italic tracking-tight text-white mb-8 font-bold leading-[1.25] md:leading-[1.2]"
+            className="name-reveal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display italic tracking-tight text-white mb-6 font-bold leading-[1.25] md:leading-[1.2] drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
             data-cursor="text"
           >
             Create Memories on the{"  "}
-            <span className="font-black not-italic bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa7c11] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(212,175,55,0.45)] font-display italic">
+            <span className="font-black not-italic text-white border-b-4 border-[#d4af37]">
               Big Screen
             </span>
           </h1>
 
           {/* Occasions Cycling */}
-          <div className="blur-in text-base sm:text-lg md:text-2xl font-medium text-white/90 mb-8 h-8 sm:h-10 flex items-center justify-start gap-2">
+          <div className="blur-in text-base sm:text-lg md:text-2xl font-medium text-white/95 mb-6 h-8 flex items-center justify-start gap-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
             <span>Perfect for</span>
             <span
               key={occIndex}
-              className="font-display italic text-lg sm:text-xl md:text-3xl text-accent font-black animate-role-fade-in inline-block border-b border-[#d4af37]/30 text-gold-gradient"
+              className="font-display italic text-lg sm:text-xl md:text-3xl text-accent font-black animate-role-fade-in inline-block border-b border-[#d4af37]/35 text-gold-gradient"
             >
               {occasions[occIndex]}
             </span>
@@ -143,23 +157,27 @@ export const Hero: React.FC = () => {
           {/* Description */}
           <p
             ref={descRef}
-            className="blur-in text-xs sm:text-sm md:text-base text-white/80 max-w-xl mb-10 leading-relaxed font-semibold"
+            className="blur-in text-xs sm:text-sm md:text-base text-white/90 max-w-xl mb-4 leading-relaxed font-semibold drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
           >
             Experience Mysuru's finest luxury theater for birthdays, anniversaries, romantic dates, and proposal setups. Enjoy full privacy, customized decorations, premium food/mocktails, and breathtaking Dolby surround sound.
           </p>
 
+          <p className="text-[9px] md:text-[10px] font-bold text-[#ffd700] uppercase tracking-wider mb-8 bg-[#d4af37]/20 border border-[#d4af37]/45 px-3.5 py-2 rounded-xl backdrop-blur-sm">
+            {details}
+          </p>
+
           {/* CTA Buttons */}
-          <div ref={ctasRef} className="ctas-reveal flex flex-wrap gap-4 w-full sm:w-auto">
+          <div ref={ctasRef} className="ctas-reveal flex flex-wrap gap-3.5 w-full sm:w-auto">
             <button
               onClick={() => handleScrollTo("services")}
-              className="relative px-6 sm:px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold overflow-hidden group bg-gradient-to-r from-[#d4af37] via-[#aa7c11] to-[#d4af37] text-white hover:opacity-95 hover:scale-105 transition-all shadow-lg shadow-[#d4af37]/20 border border-white/10"
+              className="relative px-6 sm:px-8 py-3.5 rounded-full text-xs font-bold overflow-hidden group bg-gradient-to-r from-[#d4af37] via-[#aa7c11] to-[#d4af37] text-white hover:opacity-95 hover:scale-105 transition-all shadow-md shadow-[#d4af37]/15 border border-white/10"
             >
               Explore Services
             </button>
 
             <button
               onClick={() => handleScrollTo("booking")}
-              className="px-6 sm:px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-white/10 border border-white/20 text-white hover:bg-white/20 hover:scale-105 transition-all shadow-sm backdrop-blur-sm"
+              className="px-6 sm:px-8 py-3.5 rounded-full text-xs font-bold bg-white/10 border border-white/20 text-white hover:bg-white/20 hover:scale-105 transition-all shadow-sm backdrop-blur-sm"
             >
               Book Screen Now
             </button>

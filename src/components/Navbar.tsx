@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { useLocation } from "./LocationContext";
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isOpen, setIsOpen] = useState(false);
+  const { activeLocation } = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,18 +50,20 @@ export const Navbar: React.FC = () => {
     { id: "reviews", label: "Reviews" },
   ];
 
+
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between md:justify-center items-center pt-4 px-6 md:px-4 md:pointer-events-none">
-      
-      {/* MOBILE HEADER BAR */}
-      <div className="w-full flex md:hidden items-center justify-between bg-white/95 backdrop-blur-md px-4 py-3 rounded-full border border-stroke shadow-lg pointer-events-auto">
+    <header className="fixed top-0 left-0 right-0 z-50 flex flex-col md:items-center pt-3 px-6 md:px-4 md:pointer-events-none gap-2">
+
+      {/* MOBILE MAIN HEADER BAR */}
+      <div className="w-full flex md:hidden items-center justify-between bg-white/95 backdrop-blur-md px-4 py-3 rounded-full border border-stroke shadow-lg pointer-events-auto mt-1">
         <div onClick={() => handleNavClick("home")} className="flex items-center gap-2 cursor-pointer">
           <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#d4af37] to-[#aa7c11] flex items-center justify-center p-[1px]">
             <div className="w-full h-full bg-white rounded-full flex items-center justify-center">
-              <span className="font-display italic text-[10px] font-black text-gold-gradient">BY</span>
+              <span className="font-display italic text-[10px] font-black text-black">BY</span>
             </div>
           </div>
-          <span className="text-xs font-black tracking-widest text-text-primary">BYS</span>
+          <span className="text-xs font-black tracking-widest text-text-primary">BYS ({activeLocation})</span>
         </div>
 
         <div className="flex items-center gap-3">
@@ -93,7 +97,7 @@ export const Navbar: React.FC = () => {
         >
           <div className="absolute inset-0 accent-gradient animate-gradient-shift rounded-full transition-transform duration-700 group-hover:rotate-180" />
           <div className="absolute inset-[2px] bg-white rounded-full flex items-center justify-center">
-            <span className="font-display italic text-xs font-bold text-accent-gradient select-none">
+            <span className="font-display italic text-xs font-black text-black select-none">
               BY
             </span>
           </div>
@@ -148,7 +152,7 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-16 left-6 right-6 z-40 bg-white/98 backdrop-blur-lg border border-stroke rounded-3xl p-5 shadow-2xl flex flex-col gap-3 md:hidden pointer-events-auto"
+            className="absolute top-28 left-6 right-6 z-40 bg-white/98 backdrop-blur-lg border border-stroke rounded-3xl p-5 shadow-2xl flex flex-col gap-3 md:hidden pointer-events-auto"
           >
             {navLinks.map((item) => {
               const isActive = activeSection === item.id;

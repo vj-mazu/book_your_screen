@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { LocationProvider } from "./components/LocationContext";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
@@ -10,8 +12,9 @@ import { Testimonials } from "./components/Testimonials";
 import { BookingForm } from "./components/BookingForm";
 import { Footer } from "./components/Footer";
 import { CustomCursor } from "./components/CustomCursor";
+import { AdminPanel } from "./components/AdminPanel";
 
-function App() {
+function MainLanding() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -48,4 +51,18 @@ function App() {
   );
 }
 
+function App() {
+  return (
+    <LocationProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainLanding />} />
+          <Route path="/admin" element={<AdminPanel />} />
+        </Routes>
+      </Router>
+    </LocationProvider>
+  );
+}
+
 export default App;
+

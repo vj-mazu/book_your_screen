@@ -112,3 +112,25 @@ body {
 }
 
 /* Restored system default cursor settings */
+
+/* Buttery-Smooth Crossfade & Ken Burns Carousel */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.8s ease-in-out;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.hero-slide img {
+  transform: scale(1.08);
+  transition: transform 4.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hero-slide.active img {
+  transform: scale(1.0);
+}

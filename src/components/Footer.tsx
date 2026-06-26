@@ -114,7 +114,14 @@ export const Footer: React.FC = () => {
       {/* Bottom Bar */}
       <div className="max-w-7xl mx-auto mt-16 md:mt-32 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-white/50 uppercase tracking-[4px] font-bold">
         <p>© {new Date().getFullYear()} Book Your Screen.</p>
-        <p>Private Theater & Event Venue</p>
+        <p className="flex items-center gap-2">
+          <span>Private Theater & Event Venue</span>
+          <span>•</span>
+          <a href="/admin" className="hover:text-[#d4af37] transition-colors flex items-center gap-0.5 lowercase font-bold tracking-widest text-[9px] border border-white/20 rounded px-2 py-0.5">
+            <span>admin portal</span>
+            <ArrowUpRight size={8} />
+          </a>
+        </p>
       </div>
     </footer>
   );

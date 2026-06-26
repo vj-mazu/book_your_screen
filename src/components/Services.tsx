@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Cake, ArrowLeft, ArrowRight, X, Heart, Popcorn, Tv, Gamepad2, Shield } from "lucide-react";
+import { useLocation } from "./LocationContext";
 
 interface Service {
   title: string;
@@ -12,45 +13,6 @@ interface Service {
   highlights: string[];
 }
 
-const servicesList: Service[] = [
-  {
-    title: "Private Screening",
-    subtitle: "Your Cinema, Your Rules",
-    longDescription: "Enjoy your favorite movies and shows on a massive 150-inch 4K Ultra HD screen with immersive Dolby Atmos surround sound. Compatible with all major OTT platforms — Netflix, Prime Video, Disney+ Hotstar, Zee5, SonyLiv, and YouTube. Catch all the sports action live in absolute privacy.",
-    coverImage: "/assets/asset-1.jpeg",
-    galleryImages: ["/assets/asset-1.jpeg", "/assets/asset-9.jpeg", "/assets/asset-14.jpeg"],
-    num: "01",
-    highlights: ["150-inch 4K Screen", "Dolby Atmos Sound", "All OTT Streaming", "Luxury Recliners"],
-  },
-  {
-    title: "Birthdays & Anniversaries",
-    subtitle: "Celebrate in Style",
-    longDescription: "Make your special day unforgettable with customized balloon setups, cake-cutting platforms, and surprise reveals. Every package can be tailored with LED lighting setups, sashes, and specific decorations to match your celebratory theme.",
-    coverImage: "/assets/asset-3.jpeg",
-    galleryImages: ["/assets/asset-3.jpeg", "/assets/asset-8.jpeg", "/assets/asset-15.jpeg", "/assets/asset-18.jpeg"],
-    num: "02",
-    highlights: ["Balloon Decor Included", "Cake-Cutting Setup", "Surprise Reveal", "Mood Lighting"],
-  },
-  {
-    title: "Private Parties",
-    subtitle: "Intimate & Exclusive",
-    longDescription: "The perfect private lounge venue for bride-to-be celebrations, kitty parties, reunions, and cozy gatherings. Set the volume, customize the lighting, put on your playlist, and dance the night away.",
-    coverImage: "/assets/asset-2.jpeg",
-    galleryImages: ["/assets/asset-2.jpeg", "/assets/asset-7.jpeg", "/assets/asset-11.jpeg", "/assets/asset-16.jpeg", "/assets/asset-19.jpeg"],
-    num: "03",
-    highlights: ["Bride-to-Be Setup", "Romantic Dome Lounge", "Dance Space", "Atmos Audio Link"],
-  },
-  {
-    title: "Traditional Functions",
-    subtitle: "Heritage Meets Luxury",
-    longDescription: "Celebrate traditional naming ceremonies, small family poojas, and family gatherings in an exclusive, air-conditioned setting. We maintain a limited guest count to preserve the absolute privacy of the experience.",
-    coverImage: "/assets/asset-5.jpeg",
-    galleryImages: ["/assets/asset-5.jpeg", "/assets/asset-6.jpeg", "/assets/asset-13.jpeg"],
-    num: "04",
-    highlights: ["Intimate Gatherings", "Naming Ceremonies", "Full AC Comfort", "Traditional Setups"],
-  },
-];
-
 const amenities = [
   { icon: <Popcorn size={22} />, label: "Outside Food Allowed", desc: "Bring your own food & beverages — no restrictions" },
   { icon: <Heart size={22} />, label: "Luxury Recliner Seating", desc: "Premium plush recliners for maximum comfort & relaxation" },
@@ -61,8 +23,51 @@ const amenities = [
 ];
 
 export const Services: React.FC = () => {
+  const { getLocationAssets } = useLocation();
+  const { theaterImages } = getLocationAssets();
+
   const [activeGallery, setActiveGallery] = useState<Service | null>(null);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+  // Setup services dynamically based on active location assets
+  const servicesList: Service[] = [
+    {
+      title: "Private Screening",
+      subtitle: "Your Cinema, Your Rules",
+      longDescription: "Enjoy your favorite movies and shows on a massive 150-inch 4K Ultra HD screen with immersive Dolby Atmos surround sound. Compatible with all major OTT platforms — Netflix, Prime Video, Disney+ Hotstar, Zee5, SonyLiv, and YouTube. Catch all the sports action live in absolute privacy.",
+      coverImage: theaterImages[0] || "/assets/asset-1.jpeg",
+      galleryImages: [theaterImages[0] || "/assets/asset-1.jpeg", theaterImages[1] || "/assets/asset-7.jpeg", "/assets/asset-14.jpeg"],
+      num: "01",
+      highlights: ["150-inch 4K Screen", "Dolby Atmos Sound", "All OTT Streaming", "Luxury Recliners"],
+    },
+    {
+      title: "Birthdays & Anniversaries",
+      subtitle: "Celebrate in Style",
+      longDescription: "Make your special day unforgettable with customized balloon setups, cake-cutting platforms, and surprise reveals. Every package can be tailored with LED lighting setups, sashes, and specific decorations to match your celebratory theme.",
+      coverImage: theaterImages[2] || "/assets/asset-3.jpeg",
+      galleryImages: [theaterImages[2] || "/assets/asset-3.jpeg", theaterImages[1] || "/assets/asset-8.jpeg", "/assets/asset-15.jpeg", "/assets/asset-18.jpeg"],
+      num: "02",
+      highlights: ["Balloon Decor Included", "Cake-Cutting Setup", "Surprise Reveal", "Mood Lighting"],
+    },
+    {
+      title: "Private Parties",
+      subtitle: "Intimate & Exclusive",
+      longDescription: "The perfect private lounge venue for bride-to-be celebrations, kitty parties, reunions, and cozy gatherings. Set the volume, customize the lighting, put on your playlist, and dance the night away.",
+      coverImage: theaterImages[1] || "/assets/asset-2.jpeg",
+      galleryImages: [theaterImages[1] || "/assets/asset-2.jpeg", theaterImages[3] || "/assets/asset-7.jpeg", "/assets/asset-11.jpeg", "/assets/asset-16.jpeg", "/assets/asset-19.jpeg"],
+      num: "03",
+      highlights: ["Bride-to-Be Setup", "Romantic Dome Lounge", "Dance Space", "Atmos Audio Link"],
+    },
+    {
+      title: "Traditional Functions",
+      subtitle: "Heritage Meets Luxury",
+      longDescription: "Celebrate traditional naming ceremonies, small family poojas, and family gatherings in an exclusive, air-conditioned setting. We maintain a limited guest count to preserve the absolute privacy of the experience.",
+      coverImage: "/assets/asset-5.jpeg",
+      galleryImages: ["/assets/asset-5.jpeg", "/assets/asset-6.jpeg", "/assets/asset-13.jpeg"],
+      num: "04",
+      highlights: ["Intimate Gatherings", "Naming Ceremonies", "Full AC Comfort", "Traditional Setups"],
+    },
+  ];
 
   const handleNextImg = () => {
     if (activeGallery) {
