@@ -79,7 +79,7 @@ export const AdminPanel: React.FC = () => {
   const [blockTimeSlot, setBlockTimeSlot] = useState(timeSlots[0]);
   const [blockReason, setBlockReason] = useState("");
 
-  const API_BASE = window.location.hostname === "localhost" ? "http://localhost:5000" : "";
+  const API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname === "localhost" ? "http://localhost:5000" : "");
 
   // Set Auth headers
   const getAuthHeaders = () => ({

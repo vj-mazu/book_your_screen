@@ -65,7 +65,7 @@ export const BookingForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [confirmedBookingId, setConfirmedBookingId] = useState<string | null>(null);
 
-  const API_BASE = window.location.hostname === "localhost" ? "http://localhost:5000" : "";
+  const API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname === "localhost" ? "http://localhost:5000" : "");
 
   // Base price calculation
   const getBasePrice = () => {
@@ -101,14 +101,18 @@ export const BookingForm: React.FC = () => {
             date: date
           })
         });
-        const data = await response.json();
-        if (data.unavailable) {
-          setUnavailableSlots(data.unavailable);
-          // If current selected time slot is now unavailable, change it to first available
-          if (data.unavailable.includes(timeSlot)) {
-            const available = timeSlots.find(ts => !data.unavailable.includes(ts));
-            if (available) setTimeSlot(available);
+        const contentType = response.headers.get("content-type");
+        if (response.ok && contentType && contentType.includes("application/json")) {
+          const data = await response.json();
+          if (data.unavailable) {
+            setUnavailableSlots(data.unavailable);
+            if (data.unavailable.includes(timeSlot)) {
+              const available = timeSlots.find(ts => !data.unavailable.includes(ts));
+              if (available) setTimeSlot(available);
+            }
           }
+        } else {
+          console.warn("Availability lookup received non-JSON or error response from server (check backend status).");
         }
       } catch (err) {
         console.error("Availability lookup failure:", err);
@@ -170,9 +174,20 @@ export const BookingForm: React.FC = () => {
         })
       });
 
+      const contentType = orderRes.headers.get("content-type");
       if (!orderRes.ok) {
-        const errData = await orderRes.json();
-        throw new Error(errData.error || "Failed to initiate reservation.");
+        let errMsg = "Failed to initiate reservation.";
+        if (contentType && contentType.includes("application/json")) {
+          const errData = await orderRes.json();
+          errMsg = errData.error || errMsg;
+        } else {
+          errMsg = `Server responded with status ${orderRes.status}. Please make sure the backend is running.`;
+        }
+        throw new Error(errMsg);
+      }
+
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Invalid response format received from backend server.");
       }
 
       const orderData = await orderRes.json();
