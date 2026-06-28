@@ -65,6 +65,13 @@ export const BookingForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [confirmedBookingId, setConfirmedBookingId] = useState<string | null>(null);
 
+  const minDate = new Date().toISOString().split("T")[0];
+  const maxDate = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 15);
+    return d.toISOString().split("T")[0];
+  })();
+
   const getCleanApiBase = () => {
     let raw = import.meta.env.VITE_API_URL || (window.location.hostname === "localhost" ? "http://localhost:5000" : "");
     if (raw.endsWith("/")) raw = raw.slice(0, -1);
@@ -134,6 +141,10 @@ export const BookingForm: React.FC = () => {
     e.preventDefault();
     if (!date) {
       setErrorMessage("Please select a date.");
+      return;
+    }
+    if (date < minDate || date > maxDate) {
+      setErrorMessage("Bookings can only be made up to 15 days in advance.");
       return;
     }
     const phoneDigits = phone.replace(/\D/g, "");
@@ -480,7 +491,8 @@ Please coordinate decoration and setup. Thank you!`;
                 <input
                   type="date"
                   required
-                  min={new Date().toISOString().split("T")[0]}
+                  min={minDate}
+                  max={maxDate}
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   className="w-full px-5 py-3.5 rounded-2xl border border-stroke/60 bg-[#fffdf9] text-xs font-bold text-text-primary focus:outline-none focus:border-accent [color-scheme:light] cursor-pointer"
