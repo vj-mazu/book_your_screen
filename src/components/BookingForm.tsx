@@ -42,7 +42,7 @@ const loadRazorpayScript = () => {
 };
 
 export const BookingForm: React.FC = () => {
-  const { activeLocation } = useLocation();
+  const { activeLocation, setActiveLocation } = useLocation();
   
   // Fields
   const [selectedScreen, setSelectedScreen] = useState(screens[0]);
@@ -396,6 +396,29 @@ Please coordinate decoration and setup. Thank you!`;
                 ⚠️ {errorMessage}
               </div>
             )}
+
+             {/* Choose Location Branch Dropdown */}
+            <div>
+              <label className="block text-[10px] font-black text-muted uppercase tracking-wider mb-2">
+                Select Location Branch
+              </label>
+              <div className="relative">
+                <select
+                  value={activeLocation}
+                  onChange={(e) => setActiveLocation(e.target.value as any)}
+                  className="w-full px-5 py-4 rounded-2xl border border-stroke/60 bg-[#fffdf9] text-xs font-bold text-text-primary focus:outline-none focus:border-accent appearance-none cursor-pointer"
+                >
+                  <option value="Hebbal">Hebbal (Abhishek Circle)</option>
+                  <option value="Dr. Rajkumar Road">Dr. Rajkumar Road</option>
+                  <option value="Kuvempunagar">Kuvempunagar</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-accent">
+                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
 
             {/* 1. Name & Phone */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
